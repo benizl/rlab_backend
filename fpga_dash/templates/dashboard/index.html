@@ -4,7 +4,7 @@
 <head>
 	<meta http-equiv="Cache-Control" content="no-store" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="stylesheet" href="https://storage.googleapis.com/code.getmdl.io/1.0.0/material.blue_grey-indigo.min.css" />
+	<link rel="stylesheet" href="https://storage.googleapis.com/code.getmdl.io/1.0.0/material.red-cyan.min.css" />
 	<script src="https://storage.googleapis.com/code.getmdl.io/1.0.0/material.min.js"></script>
 	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 	<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
@@ -13,16 +13,67 @@
 
 	<script>
 	function send_test(id) {
-		Dajaxice.fpga_dash.do_inputs(Dajax.process,{'id' : id, 'val':$('#chk1').is(':checked')})
+		Dajaxice.fpga_dash.do_inputs(Dajax.process,{'id' : id, 'val':$('#switch-' + id).is(':checked')})
 	}
 	</script>
 </head>
 
 <body>
-<div style="padding:0 20%">
-	<h1 style="text-align:center">Reservation Panel</h1>
-	<p>Logged in as {{ user }}. <a href="/logout">Log Out</a></p>
-	<input type="checkbox" id="chk1" onclick="send_test(1);"></input>
-	<input type="text" value="" id="result"></input>
+<h1 style="text-align:center">Control Dashboard</h1>
+
+<div style="width:1280px;margin:0 auto;display:flex">
+	<div class="mdl-card mdl-shadow--4dp" style="margin:20px;overflow:auto">
+		<div>
+		<div style="margin:20px;float:left">
+			<h4>Switches</h4>
+			{% with ''|center:18 as range %}
+			{% for _ in range %}
+			<div style="padding:5px">
+			<label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="switch-{{ forloop.counter }}">
+				<span class="mdl-switch__label">{{ forloop.counter }}</span>
+				<input type="checkbox" id="switch-{{ forloop.counter }}" class="mdl-switch__input" onclick="send_test({{ forloop.counter }});"/>
+			</label>
+			</div>
+			{% endfor %}
+			{% endwith %}
+		</div>
+
+		<div style="margin:20px;float:left">
+			<h4>Keys</h4>
+			{% with ''|center:4 as range %}
+			{% for _ in range %}
+			<div style="padding:5px">
+				<button class="mdl-button mdl-js-button mdl-button--fab mdl-button--primary mdl-js-ripple-effect">
+				  {{ forloop.counter }}
+				</button>
+			</div>
+			{% endfor %}
+			{% endwith %}
+		</div>
+		</div>
+	</div>
+
+	<div style="flex-grow:1;display:flex;flex-direction:column">
+		<div class="mdl-shadow--4dp" style="margin:20px;padding:20px">
+			<h4>Bitstream</h4>
+			<div style="display:flex;">
+				<div style="margin:5px">
+					<input id="bs-upload" type="file" style="display:none" onchange="$this = $(this);var file=$this.val().replace(/^.*(\\|\/|\:)/, '');$('#file').text(file);"/>
+					<label id="file" for="bs-upload" class="mdl-button mdl-button--raised">Select Bistream</label>
+				</div>
+
+				<div style="flex-grow:1;margin:5px;">
+
+				</div>
+
+				<div style="margin:5px"><button class="mdl-button mdl-js-button mdl-button--raised mdl-button--primary">Upload</button></div>
+
+				<div style="margin:5px"><button class="mdl-button mdl-js-button mdl-button--raised mdl-button--primary">Demo</button></div>
+				<div style="margin:5px"><button class="mdl-button mdl-js-button mdl-button--raised mdl-button--primary">Reset</button></div>
+			</div>
+		</div>
+
+		<div class="mdl-shadow--4dp" style="flex-grow:1;margin:20px;padding:20px">text</div>
+	</div>
 </div>
 </body>
