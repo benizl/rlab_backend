@@ -1,0 +1,28 @@
+{% load staticfiles %}
+{% load dajaxice_templatetags %}
+
+<head>
+	<meta http-equiv="Cache-Control" content="no-store" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="https://storage.googleapis.com/code.getmdl.io/1.0.0/material.blue_grey-indigo.min.css" />
+	<script src="https://storage.googleapis.com/code.getmdl.io/1.0.0/material.min.js"></script>
+	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+	<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+	<script src="{% static "/static/dajax/jquery.dajax.core.js" %}"></script>
+	{% dajaxice_js_import %}
+
+	<script>
+	function send_test(id) {
+		Dajaxice.fpga_dash.do_inputs(Dajax.process,{'id' : id, 'val':$('#chk1').is(':checked')})
+	}
+	</script>
+</head>
+
+<body>
+<div style="padding:0 20%">
+	<h1 style="text-align:center">Reservation Panel</h1>
+	<p>Logged in as {{ user }}. <a href="/logout">Log Out</a></p>
+	<input type="checkbox" id="chk1" onclick="send_test(1);"></input>
+	<input type="text" value="" id="result"></input>
+</div>
+</body>
