@@ -31,6 +31,14 @@
 	function send_demo() {
 		Dajaxice.fpga_dash.do_demo(Dajax.process)
 	}
+
+	function start_load_progress() {
+		$('#bs-spinner').addClass('is-active')
+	}
+
+	function stop_load_progress() {
+		setTimeout(function() {$('#bs-spinner').removeClass('is-active')} , 1000)
+	}
 	</script>
 </head>
 
@@ -67,17 +75,18 @@
 				</div>
 
 				<h4>Bitstream</h4>
+				<div id="bs-spinner" class="mdl-spinner mdl-spinner--single-color mdl-js-spinner" style="float:right"></div>
 				<div style="margin:5px">
 					<form enctype="multipart/form-data" id="bs-form" method="post" action="bitstream" target="dummy">
 					{% csrf_token %}
-					<input id="bs-upload" name="bs-upload" type="file" style="display:none" onchange="$('#bs-form').submit()"/>
+					<input id="bs-upload" name="bs-upload" type="file" style="display:none" onchange="start_load_progress(); $('#bs-form').submit()"/>
 					<label id="bsfile" for="bs-upload" style="width:80px;overflow:hidden;" class="mdl-button mdl-button--raised mdl-button--primary">Upload</label>
 					</form>
 				</div>
 
-				<div style="margin:5px"><button style="width:96px;" class="mdl-button mdl-js-button mdl-button--raised mdl-button--primary" onclick="send_reset();">Reset</button></div>
+				<div style="margin:5px"><button style="width:96px;" class="mdl-button mdl-js-button mdl-button--raised mdl-button--primary mdl-js-ripple-effect" onclick="send_reset();">Reset</button></div>
 
-				<div style="margin:5px"><button style="width:96px;" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" onclick="send_demo();">Demo</button></div>
+				<div style="margin:5px"><button style="width:96px;" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent mdl-js-ripple-effect" onclick="send_demo();">Demo</button></div>
 
 				<h4>Audio</h4>
 				<div style="margin:5px">
@@ -101,5 +110,5 @@
 	</div>
 </div>
 
-<iframe id="dummy" name="dummy" src="#" style="display:none"></iframe>
+<iframe id="dummy" name="dummy" src="#" style="display:none" onload="stop_load_progress();"></iframe>
 </body>
