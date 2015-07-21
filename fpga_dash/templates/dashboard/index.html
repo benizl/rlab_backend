@@ -1,6 +1,7 @@
 {% load staticfiles %}
 {% load dajaxice_templatetags %}
 
+<html style='background: url({% static "dashboard/de2-big.jpg" %}) no-repeat center center fixed;  background-size: cover;overflow:hidden'>
 <head>
 	<meta http-equiv="Cache-Control" content="no-store" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -42,7 +43,7 @@
 	</script>
 </head>
 
-<body style='background: url({% static "dashboard/de2-big.jpg" %}) no-repeat center center fixed;  background-size: cover;'>
+<body>
 <div style="width:1280px;margin:100px auto;display:flex">
 	<div class="mdl-card mdl-shadow--4dp" style="margin:20px;overflow:auto">
 		<div>
@@ -112,3 +113,4 @@
 
 <iframe id="dummy" name="dummy" src="#" style="display:none" onload="stop_load_progress();"></iframe>
 </body>
+</html>
