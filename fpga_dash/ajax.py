@@ -1,9 +1,14 @@
 from dajax.core import Dajax
 from dajaxice.decorators import dajaxice_register
 
+import json
+
 @dajaxice_register
-def do_inputs(request, id, val):
-	result = "%d is %s" % (id, str(val))
-	dajax = Dajax()
-	dajax.assign('#result', 'value', result)
-	return dajax.json()
+def do_switches(request, state):
+	print state
+	return json.dumps({'result' : 'ok'})
+
+@dajaxice_register
+def do_key(request, id, state):
+	print "key %d in state %d" % (int(id), int(state))
+	return json.dumps({'result' : 'ok'})

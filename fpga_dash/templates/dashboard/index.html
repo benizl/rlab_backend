@@ -12,8 +12,16 @@
 	{% dajaxice_js_import %}
 
 	<script>
-	function send_test(id) {
-		Dajaxice.fpga_dash.do_inputs(Dajax.process,{'id' : id, 'val':$('#switch-' + id).is(':checked')})
+	function send_switches() {
+		var state = {};
+		for (var i = 1; i <=18 ; i++) {
+			state[i] = $('#switch-' + i).is(':checked')
+		}
+		Dajaxice.fpga_dash.do_switches(Dajax.process,{'state' : state})
+	}
+
+	function send_key(id, state) {
+		Dajaxice.fpga_dash.do_key(Dajax.process,{'id' : id, 'state' : state})
 	}
 	</script>
 </head>
@@ -29,7 +37,7 @@
 				<div style="padding:5px">
 				<label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="switch-{{ forloop.counter }}">
 					<span class="mdl-switch__label">{{ forloop.counter }}</span>
-					<input type="checkbox" id="switch-{{ forloop.counter }}" class="mdl-switch__input" onclick="send_test({{ forloop.counter }});"/>
+					<input type="checkbox" id="switch-{{ forloop.counter }}" class="mdl-switch__input" onclick="send_test();"/>
 				</label>
 				</div>
 				{% endfor %}
@@ -42,7 +50,7 @@
 					{% with ''|center:4 as range %}
 					{% for _ in range %}
 					<div style="padding:5px">
-						<button style="margin:0 auto" class="mdl-button mdl-js-button mdl-button--fab mdl-button--primary mdl-js-ripple-effect">
+						<button style="margin:0 auto" class="mdl-button mdl-js-button mdl-button--fab mdl-button--primary mdl-js-ripple-effect" id="key-{{ forloop.counter }}" onmousedown="send_key({{ forloop.counter }}, 1);" onmouseup="send_key({{ forloop.counter }}, 0);">
 						  {{ forloop.counter }}
 						</button>
 					</div>
