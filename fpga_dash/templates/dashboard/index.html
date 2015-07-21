@@ -23,6 +23,14 @@
 	function send_key(id, state) {
 		Dajaxice.fpga_dash.do_key(Dajax.process,{'id' : id, 'state' : state})
 	}
+
+	function send_reset() {
+		Dajaxice.fpga_dash.do_reset(Dajax.process)
+	}
+
+	function send_demo() {
+		Dajaxice.fpga_dash.do_demo(Dajax.process)
+	}
 	</script>
 </head>
 
@@ -67,9 +75,9 @@
 					</form>
 				</div>
 
-				<div style="margin:5px"><button style="width:96px;" class="mdl-button mdl-js-button mdl-button--raised mdl-button--primary">Reset</button></div>
+				<div style="margin:5px"><button style="width:96px;" class="mdl-button mdl-js-button mdl-button--raised mdl-button--primary" onclick="send_reset();">Reset</button></div>
 
-				<div style="margin:5px"><button style="width:96px;" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent">Demo</button></div>
+				<div style="margin:5px"><button style="width:96px;" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" onclick="send_demo();">Demo</button></div>
 
 				<h4>Audio</h4>
 				<div style="margin:5px">
