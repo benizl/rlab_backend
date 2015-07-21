@@ -4,7 +4,7 @@
 <head>
 	<meta http-equiv="Cache-Control" content="no-store" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="stylesheet" href="https://storage.googleapis.com/code.getmdl.io/1.0.0/material.red-cyan.min.css" />
+	<link rel="stylesheet" href="https://storage.googleapis.com/code.getmdl.io/1.0.0/material.red-deep_purple.min.css" />
 	<script src="https://storage.googleapis.com/code.getmdl.io/1.0.0/material.min.js"></script>
 	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 	<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
@@ -22,56 +22,68 @@
 <div style="width:1280px;margin:100px auto;display:flex">
 	<div class="mdl-card mdl-shadow--4dp" style="margin:20px;overflow:auto">
 		<div>
-		<div style="margin:20px;float:left">
-			<h4>Switches</h4>
-			{% with ''|center:18 as range %}
-			{% for _ in range %}
-			<div style="padding:5px">
-			<label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="switch-{{ forloop.counter }}">
-				<span class="mdl-switch__label">{{ forloop.counter }}</span>
-				<input type="checkbox" id="switch-{{ forloop.counter }}" class="mdl-switch__input" onclick="send_test({{ forloop.counter }});"/>
-			</label>
+			<div style="margin:20px;float:left;width:100px">
+				<h4>Switches</h4>
+				{% with ''|center:18 as range %}
+				{% for _ in range %}
+				<div style="padding:5px">
+				<label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="switch-{{ forloop.counter }}">
+					<span class="mdl-switch__label">{{ forloop.counter }}</span>
+					<input type="checkbox" id="switch-{{ forloop.counter }}" class="mdl-switch__input" onclick="send_test({{ forloop.counter }});"/>
+				</label>
+				</div>
+				{% endfor %}
+				{% endwith %}
 			</div>
-			{% endfor %}
-			{% endwith %}
-		</div>
 
-		<div style="margin:20px;float:left">
-			<h4>Keys</h4>
-			{% with ''|center:4 as range %}
-			{% for _ in range %}
-			<div style="padding:5px">
-				<button class="mdl-button mdl-js-button mdl-button--fab mdl-button--primary mdl-js-ripple-effect">
-				  {{ forloop.counter }}
-				</button>
+			<div style="margin:20px;float:left;width:150px">
+				<h4>Keys</h4>
+				<div style="display:flex;flex-wrap:wrap">
+					{% with ''|center:4 as range %}
+					{% for _ in range %}
+					<div style="padding:5px">
+						<button style="margin:0 auto" class="mdl-button mdl-js-button mdl-button--fab mdl-button--primary mdl-js-ripple-effect">
+						  {{ forloop.counter }}
+						</button>
+					</div>
+					{% endfor %}
+					{% endwith %}
+				</div>
+
+				<h4>Bitstream</h4>
+				<div style="margin:5px">
+					<form enctype="multipart/form-data" id="bs-form" method="post" action="bitstream" target="dummy">
+					{% csrf_token %}
+					<input id="bs-upload" name="bs-upload" type="file" style="display:none" onchange="$('#bs-form').submit()"/>
+					<label id="bsfile" for="bs-upload" style="width:80px;overflow:hidden;" class="mdl-button mdl-button--raised mdl-button--primary">Upload</label>
+					</form>
+				</div>
+
+				<div style="margin:5px"><button style="width:96px;" class="mdl-button mdl-js-button mdl-button--raised mdl-button--primary">Reset</button></div>
+
+				<div style="margin:5px"><button style="width:96px;" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent">Demo</button></div>
+
+				<h4>Audio</h4>
+				<div style="margin:5px">
+					<form enctype="multipart/form-data" id="audio-form" method="post" action="audio" target="dummy">
+					{% csrf_token %}
+					<input id="audio-upload" name="audio-upload" type="file" style="display:none" onchange="$('#bs-form').submit()"/>
+					<label id="audiofile" for="audio-upload" style="width:80px" class="mdl-button mdl-button--raised mdl-button--primary">Upload</label>
+				</div>
 			</div>
-			{% endfor %}
-			{% endwith %}
-		</div>
 		</div>
 	</div>
 
 	<div style="flex-grow:1;display:flex;flex-direction:column">
-		<div class="mdl-shadow--4dp" style="margin:20px;padding:20px;background:#FFFFFF">
-			<h4>Bitstream</h4>
-			<div style="display:flex;">
-				<div style="margin:5px">
-					<input id="bs-upload" type="file" style="display:none" onchange="$this = $(this);var file=$this.val().replace(/^.*(\\|\/|\:)/, '');$('#file').text(file);"/>
-					<label id="file" for="bs-upload" class="mdl-button mdl-button--raised">Select Bistream</label>
-				</div>
-
-				<div style="flex-grow:1;margin:5px;">
-
-				</div>
-
-				<div style="margin:5px"><button class="mdl-button mdl-js-button mdl-button--raised mdl-button--primary">Upload</button></div>
-
-				<div style="margin:5px"><button class="mdl-button mdl-js-button mdl-button--raised mdl-button--primary">Demo</button></div>
-				<div style="margin:5px"><button class="mdl-button mdl-js-button mdl-button--raised mdl-button--primary">Reset</button></div>
-			</div>
+		<div class="mdl-shadow--4dp" style="flex-grow:1;margin:20px;padding:20px;background:#FFFFFF">
+			<video />
 		</div>
 
-		<div class="mdl-shadow--4dp" style="flex-grow:1;margin:20px;padding:20px;background:#FFFFFF">text</div>
+		<div class="mdl-shadow--4dp" style="margin:20px;padding:5px;background:#FFFFFF">
+			RLab Backend Version 0.1.
+		</div>
 	</div>
 </div>
+
+<iframe id="dummy" name="dummy" src="#" style="display:none"></iframe>
 </body>
