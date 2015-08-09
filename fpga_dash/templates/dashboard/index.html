@@ -1,7 +1,7 @@
 {% load staticfiles %}
 {% load dajaxice_templatetags %}
 
-<html style='background: url({% static "dashboard/de2-big.jpg" %}) no-repeat center center fixed;  background-size: cover;overflow:hidden'>
+<html style="background: url('{% static "dashboard/de2-big.jpg" %}') no-repeat center center fixed;  background-size: cover;overflow:hidden">
 <head>
 	<meta http-equiv="Cache-Control" content="no-store" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,7 +9,7 @@
 	<script src="https://storage.googleapis.com/code.getmdl.io/1.0.0/material.min.js"></script>
 	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 	<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
-	<script src="{% static "/static/dajax/jquery.dajax.core.js" %}"></script>
+	<script src="{% static "dajax/jquery.dajax.core.js" %}"></script>
 	{% dajaxice_js_import %}
 
 	<script>
@@ -54,7 +54,7 @@
 				<div style="padding:5px">
 				<label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="switch-{{ forloop.counter }}">
 					<span class="mdl-switch__label">{{ forloop.counter }}</span>
-					<input type="checkbox" id="switch-{{ forloop.counter }}" class="mdl-switch__input" onclick="send_test();"/>
+					<input type="checkbox" id="switch-{{ forloop.counter }}" class="mdl-switch__input" onclick="send_switches();"/>
 				</label>
 				</div>
 				{% endfor %}
