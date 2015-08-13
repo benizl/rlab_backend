@@ -38,13 +38,14 @@ def _update_state():
 
 	outstr = switchstate + keystate + '\n'
 	de2serial.write(outstr)
-	logger.debug("New state %s", outstr)
+	print("New state %s" % outstr)
 
 def switches(swstate):
+	global switchstate
 	n = 0
 	for i in range(18,0,-1):
-		if swstate[i]: n += 1
-		n << 1
+		n <<= 1
+		if swstate[str(i)]: n += 1
 
 	assert n >= 0 and n <= 0xFFFFF
 
@@ -52,13 +53,15 @@ def switches(swstate):
 
 	_update_state()
 
-def keys(kstate):
-	n = 0
-	for i in range(4,0,-1):
-		if kstate[i]: n += 1
-		n << 1
+def keys(id, state):
+	global keystate
+	n = int(keystate, 16)
 
-	assert n >= 0 and n <= 0xF
+	# Keys are active-low
+	if not state:
+		n |= 1 << (id - 1)
+	else:
+		n &= ~(1 << (id - 1))
 
 	keystate = format(n, 'x')
 
