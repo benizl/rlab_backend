@@ -3,14 +3,16 @@ from dajaxice.decorators import dajaxice_register
 
 import json
 
+#import hardware
+
 @dajaxice_register
 def do_switches(request, state):
-	print state
+#	hardware.switches(state)
 	return json.dumps({'result' : 'ok'})
 
 @dajaxice_register
 def do_key(request, id, state):
-	print "key %d in state %d" % (int(id), int(state))
+	print id, state #"key %d in state %d" % (int(id), int(state))
 	return json.dumps({'result' : 'ok'})
 
 @dajaxice_register

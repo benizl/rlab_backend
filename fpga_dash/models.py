@@ -1,4 +1,5 @@
 from django.db import models
 
-class DashSession(models.Model):
-	expire = models.DateTimeField()
+class Configuration(models.Model):
+	de2Serial = models.CharField(max_length=100)
+	ardSerial = models.CharField(max_length=100)
