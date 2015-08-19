@@ -1,7 +1,7 @@
 {% load staticfiles %}
 {% load dajaxice_templatetags %}
 
-<html style="background: url('{% static "dashboard/de2-big.jpg" %}') no-repeat center center fixed;  background-size: cover;overflow:hidden">
+<html style="background: url('{% static "dashboard/de2-big.jpg" %}') no-repeat center center fixed;  background-size: cover;">
 <head>
 	<meta http-equiv="Cache-Control" content="no-store" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,6 +11,10 @@
 	<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
 	<script src="{% static "dajax/jquery.dajax.core.js" %}"></script>
 	{% dajaxice_js_import %}
+
+	<script src="{% static "socket.io.min.js" %}"></script>
+	<script type="text/javascript" src="{% static "easyrtc.js" %}"></script>
+	<script type="text/javascript" src="{% static "dashboard/camlogic.js" %}"></script>
 
 	<script>
 	function send_switches() {
@@ -44,7 +48,8 @@
 </head>
 
 <body>
-<div style="width:1280px;margin:100px auto;display:flex">
+<div style="padding:50px 200px">
+<div style="display:flex;justify-content:center">
 	<div class="mdl-card mdl-shadow--4dp" style="margin:20px;overflow:auto">
 		<div>
 			<div style="margin:20px;float:left;width:100px">
@@ -89,12 +94,9 @@
 
 				<div style="margin:5px"><button style="width:96px;" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent mdl-js-ripple-effect" onclick="send_demo();">Demo</button></div>
 
-				<h4>Audio</h4>
+				<h4>Video</h4>
 				<div style="margin:5px">
-					<form enctype="multipart/form-data" id="audio-form" method="post" action="audio" target="dummy">
-					{% csrf_token %}
-					<input id="audio-upload" name="audio-upload" type="file" style="display:none" onchange="$('#bs-form').submit()"/>
-					<label id="audiofile" for="audio-upload" style="width:80px" class="mdl-button mdl-button--raised mdl-button--primary">Upload</label>
+					<button id="vidStartBtn" onclick="init_video('test', false);" style="width:96px" class="mdl-button mdl-button--raised mdl-button--primary">Start</button>
 				</div>
 			</div>
 		</div>
@@ -102,15 +104,20 @@
 
 	<div style="flex-grow:1;display:flex;flex-direction:column">
 		<div class="mdl-shadow--4dp" style="flex-grow:1;margin:20px;padding:20px;background:#FFFFFF">
-			<video />
+			<video autoplay="autoplay" id="remoteVideo" width=960 height=720>
+				Not supported
+			</video>
+
+			<video autoplay="autoplay" id="localVideo" style="display:none" muted="muted"></video>
 		</div>
 
 		<div class="mdl-shadow--4dp" style="margin:20px;padding:5px;background:#FFFFFF">
 			RLab Backend Version 0.1.
+			<div id="calldiv"></div>
 		</div>
 	</div>
 </div>
-
+</div>
 <iframe id="dummy" name="dummy" src="#" style="display:none" onload="stop_load_progress();"></iframe>
 </body>
 </html>
