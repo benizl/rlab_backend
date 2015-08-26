@@ -17,21 +17,11 @@ function init_video(app_id, is_linkage) {
 		easyrtc.enableVideo(false);
 	}
 
-	var connectSuccess = function(myId) {
-	    console.log("My easyrtcid is " + myId);
-	}
-
-	var connectFailure = function(errorCode, errText) {
-		console.log(errText);
-	}
-
-	easyrtc.initMediaSource(
-		function(){        // success callback
-			var selfVideo = document.getElementById("localVideo");
-			easyrtc.setVideoObjectSrc(selfVideo, easyrtc.getLocalStream());
-			easyrtc.connect(app_id, connectSuccess, connectFailure);
-		},
-		connectFailure
+	easyrtc.connect(app_id, 
+		function(myId) {
+	    	console.log("My easyrtcid is " + myId);}, 
+	    function(errorCode, errText) {
+			console.log(errText);}
 	);
 }
 
