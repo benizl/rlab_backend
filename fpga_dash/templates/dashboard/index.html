@@ -96,7 +96,7 @@
 
 				<h4>Video</h4>
 				<div style="margin:5px">
-					<button id="vidStartBtn" onclick="init_video('test', false);" style="width:96px" class="mdl-button mdl-button--raised mdl-button--primary">Start</button>
+					<button id="vidStartBtn" onclick="init_video('test', false);" style="width:96px" class="mdl-button mdl-js-button mdl-button--raised mdl-button--primary mdl-js-ripple-effect">Start</button>
 				</div>
 			</div>
 		</div>
@@ -104,11 +104,9 @@
 
 	<div style="flex-grow:1;display:flex;flex-direction:column">
 		<div class="mdl-shadow--4dp" style="flex-grow:1;margin:20px;padding:20px;background:#FFFFFF">
-			<video autoplay="autoplay" id="remoteVideo" width=960 height=720>
+			<video autoplay="autoplay" id="remoteVideo" style="width:100%" width=960 height=720>
 				Not supported
 			</video>
-
-			<video autoplay="autoplay" id="localVideo" style="display:none" muted="muted"></video>
 		</div>
 
 		<div class="mdl-shadow--4dp" style="margin:20px;padding:5px;background:#FFFFFF">
