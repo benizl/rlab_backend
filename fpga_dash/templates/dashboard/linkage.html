@@ -2,14 +2,14 @@
 
 <html>
 <head>
-	<script src="{% static "socket.io.min.js" %}"></script>
+	<script src="{% static "socket.io.js" %}"></script>
 	<script type="text/javascript" src="{% static "easyrtc.js" %}"></script>
 	<script type="text/javascript" src="{% static "dashboard/camlogic.js" %}"></script>
 </head>
 <body>
 
 <h1>Webcam linkage</h1>
-<a onclick="init_video('test', true)">Start</a>
+<a onclick="init_video('{{ viewid }}', true)">Start</a>
 <video id="localVideo" width=640 height=480 style="width:100%;height:100%">
 Not supported
 </video>

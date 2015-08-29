@@ -8,8 +8,8 @@ easyrtc.setOnStreamClosed( function (callerEasyrtcid) {
 	easyrtc.setVideoObjectSrc(document.getElementById('remoteVideo'), "");
 });
 
-function init_video(app_id, is_linkage) {
-	easyrtc.setSocketUrl(":8080");
+function init_video(room_id, is_linkage) {
+	easyrtc.setSocketUrl("//vlab.cecs.anu.edu.au:80");
 	easyrtc.setRoomOccupantListener( roomListener);
 
 	if (!is_linkage) {
@@ -17,11 +17,24 @@ function init_video(app_id, is_linkage) {
 		easyrtc.enableVideo(false);
 	}
 
-	easyrtc.connect(app_id, 
+	console.log(room_id);
+
+	var failure = function (err, msg) {
+		alert("Can't connect to Video server. Try disabling AdBlock and PrivacyBadger Extensions for this URL.");
+		console.log(msg);
+	}
+
+	easyrtc.joinRoom(room_id, null,
+		function(room) {
+			console.log("Joined room " + room);	},
+		function(err, msg, room) {
+			failure(err, msg);}
+	);
+
+	easyrtc.connect('engn8537', 
 		function(myId) {
-	    	console.log("My easyrtcid is " + myId);}, 
-	    function(errorCode, errText) {
-			console.log(errText);}
+	    	console.log("My easyrtcid is " + myId);},
+	    failure
 	);
 }
 
