@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import HttpResponse, HttpResponseRedirect, Http404
+from django.http import HttpResponse, HttpResponseRedirect, Http404, HttpResponseServerError
 from django.views.decorators.http import require_POST
 
 import random, string
@@ -13,9 +13,19 @@ def linkage(request):
 
 @require_POST
 def ul_bitstream(request):
-	print "TODO: Load bitstream"
-	print request.FILES['bs-upload']
-	return HttpResponse('')
+	import tempfile
+	fobj = request.FILES['bs-upload']
+	tmp = tempfile.NamedTemporaryFile()
+
+	for chunk in fobj.chunks:
+		tmp.write(chunk)
+
+	ret = hardware.load_bitstream(tmp.name)
+
+	if ret:
+		return HttpResponseServerError()
+	else:
+		return HttpResponse('')
 
 @require_POST
 def ul_audio(request):

@@ -1,7 +1,5 @@
-import serial
+import serial, os
 import logging
-
-from . import models
 
 de2serial = None
 ardserial = None
@@ -9,23 +7,30 @@ ardserial = None
 switchstate = '00000'
 keystate = 'F'
 
-logger = logging.getLogger(__name__)
+log = logging.getLogger(__name__)
 
 def _check_init():
-	global de2serial, ardserial
+	ardPath = None
+	de2Path = None
+
 	try:
-		cfg = models.Configuration.objects.all()[0]
-	except:
-		print("No configuration found")
+		basepath = '/dev/serial/by-id'
+		for p in os.listdir(basepath):
+			if 'arduino' in p.lower():
+				ardPath = os.path.join(basepath, p)
+			elif 'prolific' in p.lower():
+				de2Path = os.path.join(basepath, p)
+	except OSError:
+		log.exception("Can't scan serial ports")
 		return
 
-	if de2serial is None:
+	if de2serial is None and de2Path is not None:
 		try:
 			de2serial = serial.Serial(cfg.de2Serial, 115200)
 		except:
 			print("Can't open DE2 serial port")
 
-	if ardserial is None:
+	if ardserial is None and ardPath is not None:
 		try:
 			ardserial = serial.Serial(cfg.ardSerial, 115200)
 		except:
@@ -38,7 +43,7 @@ def _update_state():
 
 	outstr = switchstate + keystate + '\n'
 	de2serial.write(outstr)
-	print("New state %s" % outstr)
+	log.debug("New state %s" % outstr)
 
 def switches(swstate):
 	global switchstate
@@ -70,16 +75,16 @@ def keys(id, state):
 def load_bitstream(bsfname):
 	import subprocess
 
-	logger.info("New bitstream %s", bsfname)
+	log.info("New bitstream %s", bsfname)
 
 	return subprocess.call(['quartus_pgm', '-m', 'jtag', '-o', 'p;%s' % bsfname])
 
 def load_demo():
-	return load_bitstream('demo.sof')
+	return load_bitstream('/opt/rlab_demo/demo.sof')
 
 def reset():
 	_check_init()
 
 	if ardserial is None: return
-
+	log.debug("Restting board")
 	ardserial.write('reset\n')
