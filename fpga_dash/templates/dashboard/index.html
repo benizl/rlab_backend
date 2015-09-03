@@ -20,29 +20,35 @@
 	function send_switches() {
 		var state = {};
 		for (var i = 1; i <=18 ; i++) {
-			state[i] = $('#switch-' + i).is(':checked')
+			state[i] = $('#switch-' + i).is(':checked');
 		}
-		Dajaxice.fpga_dash.do_switches(Dajax.process,{'state' : state})
+		Dajaxice.fpga_dash.do_switches(Dajax.process,{'state' : state});
 	}
 
 	function send_key(id, state) {
-		Dajaxice.fpga_dash.do_key(Dajax.process,{'id' : id, 'state' : state})
+		Dajaxice.fpga_dash.do_key(Dajax.process,{'id' : id, 'state' : state});
 	}
 
 	function send_reset() {
-		Dajaxice.fpga_dash.do_reset(Dajax.process)
+		Dajaxice.fpga_dash.do_reset(Dajax.process);
+	}
+
+	function end_demo(data) {
+		stop_load_progress();
+		Dajax.process(data);
 	}
 
 	function send_demo() {
-		Dajaxice.fpga_dash.do_demo(Dajax.process)
+		start_load_progress();
+		Dajaxice.fpga_dash.do_demo(end_demo);
 	}
 
 	function start_load_progress() {
-		$('#bs-spinner').addClass('is-active')
+		$('#bs-spinner').addClass('is-active');
 	}
 
 	function stop_load_progress() {
-		setTimeout(function() {$('#bs-spinner').removeClass('is-active')} , 1000)
+		setTimeout(function() {$('#bs-spinner').removeClass('is-active')} , 1000);
 	}
 	</script>
 </head>
