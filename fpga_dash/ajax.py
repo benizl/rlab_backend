@@ -10,13 +10,13 @@ log = logging.getLogger(__name__)
 @dajaxice_register
 def do_switches(request, state):
 	hardware.switches(state)
-	log.debug("Switches: %x", state)
+	log.debug("Switches: " + str(state))
 	return json.dumps({'result' : 'ok'})
 
 @dajaxice_register
 def do_key(request, id, state):
 	hardware.keys(id, state)
-	log.debug("Keys: %x", state)
+	log.debug("Keys: " + str(state))
 	return json.dumps({'result' : 'ok'})
 
 @dajaxice_register
