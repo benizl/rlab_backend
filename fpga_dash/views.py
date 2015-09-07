@@ -9,6 +9,8 @@ viewid = ''.join([random.choice(string.ascii_letters) for x in range(16)])
 
 def index(request):
 	whoami = request.GET.get('whoami', '0')
+	print request.GET
+	print request.get_full_path()
 	return render(request, 'dashboard/index.html', {'viewid' : viewid, 'whoami' : whoami})
 
 def linkage(request):
