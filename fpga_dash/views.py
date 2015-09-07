@@ -8,7 +8,8 @@ import random, string
 viewid = ''.join([random.choice(string.ascii_letters) for x in range(16)])
 
 def index(request):
-	return render(request, 'dashboard/index.html', {'viewid' : viewid})
+	whoami = request.GET.get('whoami', '0')
+	return render(request, 'dashboard/index.html', {'viewid' : viewid, 'whoami' : whoami})
 
 def linkage(request):
 	return render(request, 'dashboard/linkage.html', {'viewid' : viewid})
