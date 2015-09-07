@@ -9,29 +9,6 @@ easyrtc.setOnStreamClosed( function (callerEasyrtcid) {
 });
 
 function init_video(room_id, is_linkage) {
-
-	var iceServers = [
-		{ "url" : "stun:stun.l.google.com:19302" },
-		{ "url" : "stun:stun1.l.google.com:19302" },
-		{ "url" : "stun:stun2.l.google.com:19302" },
-		{ "url" : "stun:stun3.l.google.com:19302" },
-		{ "url" : "stun:stun4.l.google.com:19302" },
-		{ "url" : "stun:stun.ekiga.net" },
-		{ "url" : "stun:stun.voiparound.com" },
-		{ "url" : "stun:stun.voipbuster.com" },
-		{ "url" : "stun:stun.voipstunt.com" },
-
-		{ "url" : "turn:vlab.cecs.anu.edu.au:3478"},
-		{ "url" : "turn:150.203.213.150:3478"},
-		{ "url" : "turn:192.168.150.1:3478"},
-
-		{ "url" : "turn:vlab.cecs.anu.edu.au:3478?transport=tcp"},
-		{ "url" : "turn:150.203.213.150:3478?transport=tcp"},
-		{ "url" : "turn:192.168.150.1:3478?transport=tcp"},
-	];
-
-	easyrtc.setOption("appIceServers", iceServers);
-
 	easyrtc.setSocketUrl("https://vlab.cecs.anu.edu.au:443");
 
 	easyrtc.setRoomOccupantListener(roomListener);
